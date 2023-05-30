@@ -179,7 +179,7 @@ app.post("/contactUs",(req,res)=>{
 //For Booking Tickets
 app.post("/bookTicketsFlight", (req, res) => {
   console.log(req.body);
-  let body = `<h1>Book Tickets</h1><p>Type:${req.body.type}</p><p>Contact No:${req.body.phone}</p><p>From:${req.body.from}</p><p>To:${req.body.to}</p><p>Departure Date:${req.body.depadate}</p><p>Return Date:${req.body.retdate}</p><p>Adults:${req.body.adult}</p><p>Childrens:${req.body.child}</p><p>Infants:${req.body.infant}</p><p>Class:${req.body.class}</p>`;
+  let body = `<h1>Book Air Tickets</h1><p>Type:${req.body.type}</p><p>Contact No:${req.body.phone}</p><p>From:${req.body.from}</p><p>To:${req.body.to}</p><p>Departure Date:${req.body.depadate}</p><p>Return Date:${req.body.retdate}</p><p>Adults:${req.body.adult}</p><p>Childrens:${req.body.child}</p><p>Infants:${req.body.infant}</p><p>Class:${req.body.class}</p>`;
   let sub = 'Book Air ticket';
   sendMail(sub, body)
     .then(() => {
@@ -193,7 +193,22 @@ app.post("/bookTicketsFlight", (req, res) => {
 });
 app.post("/bookCab", (req, res) => {
   console.log(req.body);
-  let body = `<h1>Book Tickets</h1><p>Type:${req.body.type}</p><p>Passanger:${req.body.passengers}</p><p>Contact No:${req.body.phone}</p><p>From:${req.body.from}</p><p>To:${req.body.to}</p><p> Date:${req.body.dateandtime}</p><p>Vchile Type:${req.body.vechileType}</p>`;
+  let body = `<h1>Book Cab Tickets</h1><p>Type:${req.body.type}</p><p>Passanger:${req.body.passengers}</p><p>Contact No:${req.body.phone}</p><p>From:${req.body.from}</p><p>To:${req.body.to}</p><p> Date:${req.body.dateandtime}</p><p>Vchile Type:${req.body.vechileType}</p>`;
+  let sub = 'Book Cab ticket';
+  console.log(body);
+  sendMail(sub, body)
+    .then(() => {
+      console.log('Email sent');
+      res.send({ result: "Success" });
+    })
+    .catch((error) => {
+      console.error("Failed to send email:", error);
+      res.send({ result: "Error", Error: error });
+    });
+});
+app.post("/bookHotel", (req, res) => {
+  console.log(req.body);
+  let body = `<h1>Book Hotel Tickets</h1><p>Type:${req.body.type}</p><p>Contact No:${req.body.phone}</p><p>city:${req.body.city}</p><p>email:${req.body.email}</p><p>Departure Date:${req.body.depadate}</p><p>Return Date:${req.body.retdate}</p><p>Adults:${req.body.adult}</p><p>Childrens:${req.body.child}</p><p>Infants:${req.body.infant}</p><p>Rooms:${req.body.rooms}</p>`;
   let sub = 'Book Cab ticket';
   console.log(body);
   sendMail(sub, body)
