@@ -209,7 +209,7 @@ app.post("/bookCab", (req, res) => {
 app.post("/bookHotel", (req, res) => {
   console.log(req.body);
   let body = `<h1>Book Hotel Tickets</h1><p>Type:${req.body.type}</p><p>Contact No:${req.body.phone}</p><p>city:${req.body.city}</p><p>email:${req.body.email}</p><p>Departure Date:${req.body.depadate}</p><p>Return Date:${req.body.retdate}</p><p>Adults:${req.body.adult}</p><p>Childrens:${req.body.child}</p><p>Infants:${req.body.infant}</p><p>Rooms:${req.body.rooms}</p>`;
-  let sub = 'Book Cab ticket';
+  let sub = 'Book Hotel ticket';
   console.log(body);
   sendMail(sub, body)
     .then(() => {
