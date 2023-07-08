@@ -131,7 +131,7 @@ const sendMail = (sub, body) => {
     let transporter = nodemailer.createTransport(config);
     let message = {
       from: 'aakashdaryani50@gmail.com',
-      to: 'aakashdaryani50@gmail.com',
+      to: 'dikshadaryani865@gmail.com',
       subject: sub,
       html: body
     }
