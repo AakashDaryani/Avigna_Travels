@@ -131,7 +131,7 @@ const sendMail = (sub, body) => {
     let transporter = nodemailer.createTransport(config);
     let message = {
       from: 'aakashdaryani50@gmail.com',
-      to: 'aakashdaryani50@gmail.com',
+      to: 'avignatours@gmail.com',
       subject: sub,
       html: body
     }
@@ -237,7 +237,7 @@ app.post("/submitPassportAssistance", (req, res) => {
 });
 app.post("/submitVisaBook", (req, res) => {
   let body = `<h1>Visa Booking</h1><p>Name:${req.body.fullName}</p><p>Passport Number:${req.body.passportNumber}</p><p>Contact No:${req.body.phoneNumber}</p><p>Destination:${req.body.destination}</p><p> Date:${req.body.dateOfTravel}</p><p>Email:${req.body.email}</p>`;
-  let sub = 'Visa Assistance';
+  let sub = 'Visa Booking';
   console.log(body);
   sendMail(sub, body)
     .then(() => {
