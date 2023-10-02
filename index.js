@@ -222,8 +222,12 @@ app.post("/bookHotel", (req, res) => {
     });
 });
 app.post("/submitPassportAssistance", (req, res) => {
-  sendMail('Passport Assistance Request', JSON.stringify(req.body))
+  let body = `<h1>Passport Assistance</h1><p>Name:${req.body.fullName}</p><p>Passport Number:${req.body.passportNumber}</p><p>Contact No:${req.body.phoneNumber}</p><p>Email:${req.body.email}</p><p> Date:${req.body.dateOfBirth}</p>`;
+  let sub = 'Passport Assistance';
+  console.log(body);
+  sendMail(sub, body)
     .then(() => {
+      console.log('Email sent');
       res.send({ result: "Success" });
     })
     .catch((error) => {
@@ -232,8 +236,12 @@ app.post("/submitPassportAssistance", (req, res) => {
     });
 });
 app.post("/submitVisaBook", (req, res) => {
-  sendMail('Passport Assistance Request', JSON.stringify(req.body))
+  let body = `<h1>Visa Booking</h1><p>Name:${req.body.fullName}</p><p>Passport Number:${req.body.passportNumber}</p><p>Contact No:${req.body.phoneNumber}</p><p>Destination:${req.body.destination}</p><p> Date:${req.body.dateOfTravel}</p><p>Email:${req.body.email}</p>`;
+  let sub = 'Visa Assistance';
+  console.log(body);
+  sendMail(sub, body)
     .then(() => {
+      console.log('Email sent');
       res.send({ result: "Success" });
     })
     .catch((error) => {
@@ -242,8 +250,12 @@ app.post("/submitVisaBook", (req, res) => {
     });
 });
 app.post("/submitTravelInsurance", (req, res) => {
-  sendMail('Passport Assistance Request', JSON.stringify(req.body))
+  let body = `<h1>Travel Insurance</h1><p>Name:${req.body.fullName}</p><p>Passport Number:${req.body.passportNumber}</p><p>Contact No:${req.body.phoneNumber}</p><p>Destination:${req.body.destination}</p><p> Date:${req.body.dateOfTravel}</p><p>Email:${req.body.email}</p>`;
+  let sub = 'Travel Insurance';
+  console.log(body);
+  sendMail(sub, body)
     .then(() => {
+      console.log('Email sent');
       res.send({ result: "Success" });
     })
     .catch((error) => {
