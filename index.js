@@ -131,7 +131,7 @@ const sendMail = (sub, body) => {
     let transporter = nodemailer.createTransport(config);
     let message = {
       from: 'aakashdaryani50@gmail.com',
-      to: 'avignatours@gmail.com',
+      to: 'aakashdaryani50@gmail.com',
       subject: sub,
       html: body
     }
@@ -221,6 +221,37 @@ app.post("/bookHotel", (req, res) => {
       res.send({ result: "Error", Error: error });
     });
 });
+app.post("/submitPassportAssistance", (req, res) => {
+  sendMail('Passport Assistance Request', JSON.stringify(req.body))
+    .then(() => {
+      res.send({ result: "Success" });
+    })
+    .catch((error) => {
+      console.error("Failed to send email:", error);
+      res.send({ result: "Error", Error: error });
+    });
+});
+app.post("/submitVisaBook", (req, res) => {
+  sendMail('Passport Assistance Request', JSON.stringify(req.body))
+    .then(() => {
+      res.send({ result: "Success" });
+    })
+    .catch((error) => {
+      console.error("Failed to send email:", error);
+      res.send({ result: "Error", Error: error });
+    });
+});
+app.post("/submitTravelInsurance", (req, res) => {
+  sendMail('Passport Assistance Request', JSON.stringify(req.body))
+    .then(() => {
+      res.send({ result: "Success" });
+    })
+    .catch((error) => {
+      console.error("Failed to send email:", error);
+      res.send({ result: "Error", Error: error });
+    });
+});
+
 app.post("/uploadImage",(req,res)=>{
   uploadImageToDatabase(req.body);
 })
