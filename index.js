@@ -36,7 +36,6 @@ const uploadImage = new mongoose.Schema({
 const uploadImageModel = mongoose.model("uploadImageModel", uploadImage);
 //To Upload Image in database
 const uploadImageToDatabase = (body) =>{
-  console.log(body);
   const obj = {
     base64:body.base64.toString("base64"),
     type:body.type
@@ -44,11 +43,9 @@ const uploadImageToDatabase = (body) =>{
   const data = new uploadImageModel(obj);
   return data.save()
     .then(() => {
-      console.log('Image saved successfully');
        getUploadedImages();
     })
     .catch((error) => {
-      console.error('Failed to save image:', error);
     });
 }
 const getUploadedImages = async() =>{
@@ -57,7 +54,6 @@ const getUploadedImages = async() =>{
       return data;
   }
   catch(err){
-      console.log(err);
   }
 }
 //For Sign up
@@ -65,10 +61,8 @@ const storeUser = (body) => {
   return user.findOne({ Email: body.Email })
     .then((foundUser) => {
       if (foundUser) {
-        console.log("User already exists:", foundUser);
         return { result: "User already exists" };
       } else {
-        console.log(body);
         const obj = {
           First_Name: body.First_Name,
           Last_Name: body.Last_Name,
@@ -80,20 +74,16 @@ const storeUser = (body) => {
         const data = new user(obj);
         return data.save()
           .then(() => {
-            console.log("User stored successfully");
-            console.log(data);
             let body = `<h1>New User Login</h1><p>Name:-${data.First_Name} ${data.Last_Name}</p><p>Email :- ${data.Email}</p><p>Contact No :- ${data.Contact_No}</p><p>Address :- ${data.Addresss}</p>`
             sendMail('New User',body);
             return { result: "Success" };
           })
           .catch((error) => {
-            console.error("Failed to store user:", error);
             return { result: "Error", Error: error };
           });
       }
     })
     .catch((error) => {
-      console.error("Failed to find user:", error);
       return { result: "Error", Error: error };
     });
 };
@@ -101,8 +91,6 @@ const checkUser = (body) => {
   return user.findOne({ Email: body.Email })
     .then((foundUser) => {
       if (foundUser) {
-        console.log("User already exists:", foundUser);
-        console.log(foundUser.Password == body.Password);
         if (foundUser.Password == body.Password) {
           return { result: "Success", response: "none" };
         }
@@ -114,7 +102,6 @@ const checkUser = (body) => {
       }
     })
     .catch((err) => {
-      console.log(err);
       return { result: "Error", response: err };
     })
 }
@@ -137,11 +124,9 @@ const sendMail = (sub, body) => {
     }
     transporter.sendMail(message)
       .then(() => {
-        console.log('Email sent');
         resolve();
       })
       .catch(error => {
-        console.log(error);
         reject(error);
       });
   });
@@ -154,7 +139,6 @@ app.post("/checkuser", (req, res) => {
       res.send(response);
     })
     .catch((error) => {
-      console.error("Failed to store user:", error);
       res.send({ result: "Error", Error: error });
     });
 })
@@ -165,101 +149,79 @@ app.post("/storeuser", (req, res) => {
       res.send(response);
     })
     .catch((error) => {
-      console.error("Failed to store user:", error);
       res.send({ result: "Error", Error: error });
     });
 });
 //For Contact Us
 app.post("/contactUs",(req,res)=>{
-  console.log(req.body);
   let body = `<h1>Contact Us</h1><p>Name:-${req.body.Name}</p><p>Email:-${req.body.Email}</p><p>Contact No.:-${req.body.Phone}</p><p>Query:-${req.body.Query}</p>`
   let sub = 'Contact Us'
   sendMail(sub,body);
 })
 //For Booking Tickets
 app.post("/bookTicketsFlight", (req, res) => {
-  console.log(req.body);
   let body = `<h1>Book Air Tickets</h1><p>Type:${req.body.type}</p><p>Contact No:${req.body.phone}</p><p>From:${req.body.from}</p><p>To:${req.body.to}</p><p>Departure Date:${req.body.depadate}</p><p>Return Date:${req.body.retdate}</p><p>Adults:${req.body.adult}</p><p>Childrens:${req.body.child}</p><p>Infants:${req.body.infant}</p><p>Class:${req.body.class}</p>`;
   let sub = 'Book Air ticket';
   sendMail(sub, body)
     .then(() => {
-      console.log('Email sent');
       res.send({ result: "Success" });
     })
     .catch((error) => {
-      console.error("Failed to send email:", error);
       res.send({ result: "Error", Error: error });
     });
 });
 app.post("/bookCab", (req, res) => {
-  console.log(req.body);
   let body = `<h1>Book Cab Tickets</h1><p>Type:${req.body.type}</p><p>Passanger:${req.body.passengers}</p><p>Contact No:${req.body.phone}</p><p>From:${req.body.from}</p><p>To:${req.body.to}</p><p> Date:${req.body.dateandtime}</p><p>Vchile Type:${req.body.vechileType}</p>`;
   let sub = 'Book Cab ticket';
-  console.log(body);
   sendMail(sub, body)
     .then(() => {
-      console.log('Email sent');
       res.send({ result: "Success" });
     })
     .catch((error) => {
-      console.error("Failed to send email:", error);
       res.send({ result: "Error", Error: error });
     });
 });
 app.post("/bookHotel", (req, res) => {
-  console.log(req.body);
   let body = `<h1>Book Hotel Tickets</h1><p>Type:${req.body.type}</p><p>Contact No:${req.body.phone}</p><p>city:${req.body.city}</p><p>email:${req.body.email}</p><p>Departure Date:${req.body.depadate}</p><p>Return Date:${req.body.retdate}</p><p>Adults:${req.body.adult}</p><p>Childrens:${req.body.child}</p><p>Infants:${req.body.infant}</p><p>Rooms:${req.body.rooms}</p>`;
   let sub = 'Book Hotel ticket';
-  console.log(body);
   sendMail(sub, body)
     .then(() => {
-      console.log('Email sent');
       res.send({ result: "Success" });
     })
     .catch((error) => {
-      console.error("Failed to send email:", error);
       res.send({ result: "Error", Error: error });
     });
 });
 app.post("/submitPassportAssistance", (req, res) => {
   let body = `<h1>Passport Assistance</h1><p>Name:${req.body.fullName}</p><p>Passport Number:${req.body.passportNumber}</p><p>Contact No:${req.body.phoneNumber}</p><p>Email:${req.body.email}</p><p> Date:${req.body.dateOfBirth}</p>`;
   let sub = 'Passport Assistance';
-  console.log(body);
   sendMail(sub, body)
     .then(() => {
-      console.log('Email sent');
       res.send({ result: "Success" });
     })
     .catch((error) => {
-      console.error("Failed to send email:", error);
       res.send({ result: "Error", Error: error });
     });
 });
 app.post("/submitVisaBook", (req, res) => {
   let body = `<h1>Visa Booking</h1><p>Name:${req.body.fullName}</p><p>Passport Number:${req.body.passportNumber}</p><p>Contact No:${req.body.phoneNumber}</p><p>Destination:${req.body.destination}</p><p> Date:${req.body.dateOfTravel}</p><p>Email:${req.body.email}</p>`;
   let sub = 'Visa Booking';
-  console.log(body);
   sendMail(sub, body)
     .then(() => {
-      console.log('Email sent');
       res.send({ result: "Success" });
     })
     .catch((error) => {
-      console.error("Failed to send email:", error);
       res.send({ result: "Error", Error: error });
     });
 });
 app.post("/submitTravelInsurance", (req, res) => {
   let body = `<h1>Travel Insurance</h1><p>Name:${req.body.fullName}</p><p>Passport Number:${req.body.passportNumber}</p><p>Contact No:${req.body.phoneNumber}</p><p>Destination:${req.body.destination}</p><p> Date:${req.body.dateOfTravel}</p><p>Email:${req.body.email}</p>`;
   let sub = 'Travel Insurance';
-  console.log(body);
   sendMail(sub, body)
     .then(() => {
-      console.log('Email sent');
       res.send({ result: "Success" });
     })
     .catch((error) => {
-      console.error("Failed to send email:", error);
       res.send({ result: "Error", Error: error });
     });
 });
@@ -270,17 +232,13 @@ app.post("/uploadImage",(req,res)=>{
 app.get("/getImages", (req, res) => {
   getUploadedImages()
   .then((images) => {
-    console.log('data');
-    console.log(images);
     res.send(images);
   })
   .catch((error) => {
-    console.error("Failed to get uploaded images:", error);
     res.status(500).send({ error: "Failed to get uploaded images" });
   });
 });
 
 
 app.listen(PORT, () => {
-  console.log("Server Start" + PORT);
 });
